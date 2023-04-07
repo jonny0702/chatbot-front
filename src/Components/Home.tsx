@@ -10,6 +10,7 @@ import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 
 import "../styles/Home.sass";
 import { ButtonStopChat } from "./ButonStopChat";
+import { AnimatePresence, motion } from "framer-motion";
 
 export const Home = () => {
   const [onChat, setOnChat] = useState(false);
@@ -17,25 +18,38 @@ export const Home = () => {
   const [messages, addMessage, setMessage] = useMessage([]);
   const [responseInfo, setResponseInfo] = useState("");
 
-  const handleChangeInput= (event: React.ChangeEvent<HTMLInputElement>)=>{
-    setChatText(event.currentTarget.value);
-  }
+  const animatePage = {
+    initial: {  opacity: 0 },
+    animate: { opacity: 1 },
+    exit: { opacity: 0 },
+    transition: {
+      type: "spring",
+      damping: 10,
+      duration: 4,
+    },
+  };
 
-  const handleSubmit: FormEventHandler<HTMLFormElement | HTMLDivElement> =(e)=>{
+  const handleChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setChatText(event.currentTarget.value);
+  };
+
+  const handleSubmit: FormEventHandler<HTMLFormElement | HTMLDivElement> = (
+    e
+  ) => {
     e.preventDefault();
-    if(chatText.length > 0){
+    if (chatText.length > 0) {
       addMessage({
         id: +new Date(),
-        message: chatText
-      })
+        message: chatText,
+      });
     }
     setChatText("");
     setOnChat(true);
-  }
-  const handleOnHeader = () =>{
-    setOnChat(!onChat)
+  };
+  const handleOnHeader = () => {
+    setOnChat(!onChat);
     setMessage([]);
-  }
+  };
   // const chatResponse= useCallback(()=>{
   //  handleSubmit;
   // },[chatText, messages])
@@ -51,8 +65,8 @@ export const Home = () => {
   // },[handleSubmit])
 
   return (
-    <>
-      <MenuNav/>
+    <motion.div {...animatePage}>
+      <MenuNav />
       <div className="home__container m-2">
         {!onChat ? (
           <section className="header_section">
@@ -63,14 +77,14 @@ export const Home = () => {
           </section>
         ) : (
           <section className="chat__container">
-            {
-              messages.map(msg =>(
-                <ChatBubble infoText={msg.message} key={msg.id}/>
-              ))
-            }
+            <AnimatePresence>
+              {messages.map((msg) => (
+                <ChatBubble infoText={msg.message} key={msg.id} />
+              ))}
+            </AnimatePresence>
           </section>
         )}
-        {onChat && (<ButtonStopChat action={handleOnHeader} />)}
+        {onChat && <ButtonStopChat action={handleOnHeader} />}
         <footer className="footer__input--container">
           <InputChat>
             <form className="input_chat--container" onSubmit={handleSubmit}>
@@ -95,6 +109,6 @@ export const Home = () => {
           </InputChat>
         </footer>
       </div>
-    </>
+    </motion.div>
   );
 };
