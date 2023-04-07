@@ -15,5 +15,5 @@ export const useMessage = (initValue: Array<Message> = []) => {
     [setMessages]
   );
 
-  return [messages, addMessage] as const;
+  return [messages, addMessage, setMessages] as const;
 };
