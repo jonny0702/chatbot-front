@@ -4,15 +4,17 @@ import { Header } from "./Header";
 import { VoxelModel } from "./VoxelModel";
 import { InputChat } from "./InputChat";
 import { ChatBubble } from "./ChatBubble";
+import { MenuNav } from "./MenuNav";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 
 import "../styles/Home.sass";
+import { ButtonStopChat } from "./ButonStopChat";
 
 export const Home = () => {
   const [onChat, setOnChat] = useState(false);
   const [chatText, setChatText] = useState("");
-  const [messages, addMessage] = useMessage([]);
+  const [messages, addMessage, setMessage] = useMessage([]);
   const [responseInfo, setResponseInfo] = useState("");
 
   const handleChangeInput= (event: React.ChangeEvent<HTMLInputElement>)=>{
@@ -30,6 +32,10 @@ export const Home = () => {
     setChatText("");
     setOnChat(true);
   }
+  const handleOnHeader = () =>{
+    setOnChat(!onChat)
+    setMessage([]);
+  }
   // const chatResponse= useCallback(()=>{
   //  handleSubmit;
   // },[chatText, messages])
@@ -46,7 +52,8 @@ export const Home = () => {
 
   return (
     <>
-      <div className="home__container m-3">
+      <MenuNav/>
+      <div className="home__container m-2">
         {!onChat ? (
           <section className="header_section">
             <Header />
@@ -63,6 +70,7 @@ export const Home = () => {
             }
           </section>
         )}
+        {onChat && (<ButtonStopChat action={handleOnHeader} />)}
         <footer className="footer__input--container">
           <InputChat>
             <form className="input_chat--container" onSubmit={handleSubmit}>
