@@ -33,36 +33,37 @@ export const Home = () => {
     setChatText(event.currentTarget.value);
   };
 
-  const handleSubmit: FormEventHandler<HTMLFormElement | HTMLDivElement> = (
-    e
-  ) => {
+  const handleSubmit: FormEventHandler<HTMLFormElement | HTMLDivElement> = (e) => {
     e.preventDefault();
     if (chatText.length > 0) {
       addMessage({
         id: +new Date(),
         message: chatText,
       });
+      postChatAPI(chatText)
     }
     setChatText("");
     setOnChat(true);
   };
+
   const handleOnHeader = () => {
     setOnChat(!onChat);
     setMessage([]);
   };
-  // const chatResponse= useCallback(()=>{
-  //  handleSubmit;
-  // },[chatText, messages])
 
-  // useEffect(()=>{
-  //   fetch("http://localhost:8080/api/chatgpt", {
-  //     method: "POST",
-  //     body: chatText
-  //   }).then(res => res.json())
-  //     .then(res => {
-  //       console.log(res)
-  //     });
-  // },[handleSubmit])
+  const postChatAPI = (chatMessage: any) =>{
+  console.log(chatMessage)
+    fetch("http://localhost:8080/api/chatgpt", {
+      method: "POST",
+      body: chatMessage,
+    }).then(res => res.text())
+    .then(res => {
+      console.log(res)
+      setResponseInfo(res)
+    })
+    .catch((e) => console.log(e))
+  }
+
 
   return (
     <motion.div {...animatePage}>
@@ -82,6 +83,7 @@ export const Home = () => {
                 <ChatBubble infoText={msg.message} key={msg.id} />
               ))}
             </AnimatePresence>
+            <div>{responseInfo}</div>
           </section>
         )}
         {onChat && <ButtonStopChat action={handleOnHeader} />}
