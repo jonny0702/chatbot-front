@@ -21,7 +21,7 @@ import "../styles/Home.sass";
  *
  * @TASK
  * 1. making a loading chat for response gpt ✅
- * 2. MarkDown format
+ * 2. MarkDown format✅
  * 3. Responsive Web page
  * 4. making animation 3d camera
  */
@@ -94,7 +94,7 @@ export const Home = () => {
   return (
     <motion.div {...animatePage}>
       <MenuNav />
-      <div className="home__container m-2">
+      <div className="home__container m-auto">
         {!onChat ? (
           <section className="header_section">
             <Header />

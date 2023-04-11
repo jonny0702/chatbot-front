@@ -41,7 +41,7 @@ export const ChatBubble: React.FC<ChatBubbleProps> = ({
         {...animation}
       >
         {isResponse ? (
-          <div className="bubble-chat__mark">
+          <div className={"bubble-chat__mark"}>
             <Markdown
               options={{
                 wrapper: "div",
@@ -63,3 +63,4 @@ export const ChatBubble: React.FC<ChatBubbleProps> = ({
     </>
   );
 };
+// detectMarkdown(infoText) ? "bubble-chat__mark" : "bubble-chat__text"
