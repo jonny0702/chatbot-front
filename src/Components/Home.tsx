@@ -7,17 +7,28 @@ import { ChatBubble } from "./ChatBubble";
 import { MenuNav } from "./MenuNav";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
-
-import "../styles/Home.sass";
+import { ResponseBubble } from "./ResponseBubble";
+import { TypingLoading } from "./TypingLoading";
 import { ButtonStopChat } from "./ButonStopChat";
 import { AnimatePresence, motion } from "framer-motion";
-import { ResponseBubble } from "./ResponseBubble";
 
+
+import "../styles/Home.sass";
+
+
+
+/**
+ *
+ * @TASK
+ * 1. making a loading chat for response gpt
+ * 3. Responsive Web page
+ * 3. making animation 3d camera
+ */
 export const Home = () => {
   const [onChat, setOnChat] = useState(false);
+  const [loadingState, setLoading] = useState(false);
   const [chatText, setChatText] = useState("");
   const [messages, addMessage, setMessage] = useMessage([]);
-  const [responseInfo, setResponseInfo] = useState("");
 
   const animatePage = {
     initial: { opacity: 0 },
@@ -57,20 +68,23 @@ export const Home = () => {
 
   const postChatAPI = (chatMessage: any) => {
     console.log(chatMessage);
+    setLoading(true);
     fetch("http://localhost:8080/api/chatgpt", {
       method: "POST",
       body: chatMessage,
     })
-      .then((res) => res.text())
+      .then((res) => {
+        return res.text();
+      })
       .then((res) => {
         console.log(res);
-        setResponseInfo(res);
         if (res !== null) {
           addMessage({
             id: +new Date() * 2,
             isResponse: true,
             message: res,
           });
+          setLoading(false);
         }
       })
       .catch((e) => console.log(e));
@@ -106,6 +120,7 @@ export const Home = () => {
                   </>
                 ))}
             </div>
+            {loadingState === true && <TypingLoading />}
           </section>
         )}
         {onChat && <ButtonStopChat action={handleOnHeader} />}
