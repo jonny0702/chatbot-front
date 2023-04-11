@@ -1,19 +1,24 @@
 import { useState, useCallback } from "react";
 
-export interface Message {
-  id: number
-  message: String;
+export interface Messages {
+    id: number;
+    isResponse: boolean
+    message: String;
 }
 
-export const useMessage = (initValue: Array<Message> = []) => {
-  const [messages, setMessages] = useState(initValue);
+export const useMessage = (initValueMessage: Array<Messages> = []) => {
+  const [messages, setMessages] = useState(initValueMessage);
 
   const addMessage = useCallback(
-    (msg: Message) => {
+    (msg: Messages) => {
       setMessages((messages) => [...messages, msg]);
     },
     [setMessages]
   );
 
-  return [messages, addMessage, setMessages] as const;
+  return [
+    messages,
+    addMessage,
+    setMessages,
+  ] as const;
 };

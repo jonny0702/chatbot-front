@@ -11,6 +11,7 @@ import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import "../styles/Home.sass";
 import { ButtonStopChat } from "./ButonStopChat";
 import { AnimatePresence, motion } from "framer-motion";
+import { ResponseBubble } from "./ResponseBubble";
 
 export const Home = () => {
   const [onChat, setOnChat] = useState(false);
@@ -19,7 +20,7 @@ export const Home = () => {
   const [responseInfo, setResponseInfo] = useState("");
 
   const animatePage = {
-    initial: {  opacity: 0 },
+    initial: { opacity: 0 },
     animate: { opacity: 1 },
     exit: { opacity: 0 },
     transition: {
@@ -33,14 +34,17 @@ export const Home = () => {
     setChatText(event.currentTarget.value);
   };
 
-  const handleSubmit: FormEventHandler<HTMLFormElement | HTMLDivElement> = (e) => {
+  const handleSubmit: FormEventHandler<HTMLFormElement | HTMLDivElement> = (
+    e
+  ) => {
     e.preventDefault();
     if (chatText.length > 0) {
       addMessage({
         id: +new Date(),
+        isResponse: false,
         message: chatText,
       });
-      postChatAPI(chatText)
+      postChatAPI(chatText);
     }
     setChatText("");
     setOnChat(true);
@@ -51,19 +55,26 @@ export const Home = () => {
     setMessage([]);
   };
 
-  const postChatAPI = (chatMessage: any) =>{
-  console.log(chatMessage)
+  const postChatAPI = (chatMessage: any) => {
+    console.log(chatMessage);
     fetch("http://localhost:8080/api/chatgpt", {
       method: "POST",
       body: chatMessage,
-    }).then(res => res.text())
-    .then(res => {
-      console.log(res)
-      setResponseInfo(res)
     })
-    .catch((e) => console.log(e))
-  }
-
+      .then((res) => res.text())
+      .then((res) => {
+        console.log(res);
+        setResponseInfo(res);
+        if (res !== null) {
+          addMessage({
+            id: +new Date() * 2,
+            isResponse: true,
+            message: res,
+          });
+        }
+      })
+      .catch((e) => console.log(e));
+  };
 
   return (
     <motion.div {...animatePage}>
@@ -78,12 +89,23 @@ export const Home = () => {
           </section>
         ) : (
           <section className="chat__container">
-            <AnimatePresence>
-              {messages.map((msg) => (
-                <ChatBubble infoText={msg.message} key={msg.id} />
-              ))}
-            </AnimatePresence>
-            <div>{responseInfo}</div>
+            <div className="chat__items">
+              {messages.length > 0 &&
+                messages.map((msg, i) => (
+                  <>
+                    {!msg.isResponse && (
+                      <div className="chat__bubble">
+                        <ChatBubble infoText={msg.message} key={msg.id} />
+                      </div>
+                    )}
+                    {msg.isResponse && (
+                      <div className="chat__bubble__response">
+                        <ChatBubble infoText={msg.message} key={i} isResponse />
+                      </div>
+                    )}
+                  </>
+                ))}
+            </div>
           </section>
         )}
         {onChat && <ButtonStopChat action={handleOnHeader} />}
