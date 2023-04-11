@@ -20,9 +20,10 @@ import "../styles/Home.sass";
 /**
  *
  * @TASK
- * 1. making a loading chat for response gpt
+ * 1. making a loading chat for response gpt ✅
+ * 2. MarkDown format
  * 3. Responsive Web page
- * 3. making animation 3d camera
+ * 4. making animation 3d camera
  */
 export const Home = () => {
   const [onChat, setOnChat] = useState(false);

@@ -1,8 +1,11 @@
 import { motion, usePresence } from "framer-motion";
+import { CodeMarkdown } from "./CodeMarkdown";
+import Markdown from "markdown-to-jsx";
+
 import "../styles/BubbleChat.sass";
 
 interface ChatBubbleProps {
-  infoText: String;
+  infoText: any;
   isResponse?: boolean;
 }
 
@@ -37,7 +40,25 @@ export const ChatBubble: React.FC<ChatBubbleProps> = ({
         }
         {...animation}
       >
-        <span className="bubble-chat__text">{infoText}</span>
+        {isResponse ? (
+          <div className="bubble-chat__mark">
+            <Markdown
+              options={{
+                wrapper: "div",
+                disableParsingRawHTML: true,
+                overrides: {
+                  code: {
+                    component: CodeMarkdown,
+                  },
+                },
+              }}
+            >
+              {infoText}
+            </Markdown>
+          </div>
+        ) : (
+          <span className="bubble-chat__text">{infoText}</span>
+        )}
       </motion.div>
     </>
   );
