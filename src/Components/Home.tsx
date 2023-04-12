@@ -7,30 +7,24 @@ import { ChatBubble } from "./ChatBubble";
 import { MenuNav } from "./MenuNav";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
-import { ResponseBubble } from "./ResponseBubble";
 import { TypingLoading } from "./TypingLoading";
+import { ButtonSetMarkDownFormat } from "./ButtonSetMarkDownFormat";
 import { ButtonStopChat } from "./ButonStopChat";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 
 import "../styles/Home.sass";
-import { ButtonSetMarkDownFormat } from "./ButtonSetMarkDownFormat";
 
-/**
- *
- * @TASK
- * 1. making a loading chat for response gpt ✅
- * 2. MarkDown format✅
- * 3. Responsive Web page✅
- * 4. making animation 3d camera
- */
 export const Home = () => {
+  const API_URL = "https://chatbotgpt-api.herokuapp.com/api/chatgpt";
   const [onChat, setOnChat] = useState(false);
   const [loadingState, setLoading] = useState(false);
   const [onMarkdown, setOnMarkdown] = useState(false);
   const [chatText, setChatText] = useState("");
   const [messages, addMessage, setMessage] = useMessage([]);
 
-  const onMarkdownFormatPetition = onMarkdown ? chatText + ", markdown format" : chatText;
+  const onMarkdownFormatPetition = onMarkdown
+    ? chatText + ", markdown format"
+    : chatText;
 
   const animatePage = {
     initial: { opacity: 0 },
@@ -73,7 +67,7 @@ export const Home = () => {
   const postChatAPI = (chatMessage: any) => {
     console.log(chatMessage);
     setLoading(true);
-    fetch("http://localhost:8080/api/chatgpt", {
+    fetch(API_URL, {
       method: "POST",
       body: chatMessage,
     })
@@ -129,7 +123,10 @@ export const Home = () => {
         )}
         <div className="button_modes_container">
           {onChat && <ButtonStopChat action={handleOnHeader} />}
-          <ButtonSetMarkDownFormat action={handleMarkDownFormat} isSelected={onMarkdown}/>
+          <ButtonSetMarkDownFormat
+            action={handleMarkDownFormat}
+            isSelected={onMarkdown}
+          />
         </div>
         <footer className="footer__input--container">
           <InputChat>
