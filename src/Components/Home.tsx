@@ -65,7 +65,6 @@ export const Home = () => {
   };
 
   const postChatAPI = (chatMessage: any) => {
-    console.log(chatMessage);
     setLoading(true);
     fetch(API_URL, {
       method: "POST",
@@ -75,7 +74,6 @@ export const Home = () => {
         return res.text();
       })
       .then((res) => {
-        console.log(res);
         if (res !== null) {
           addMessage({
             id: +new Date() * 2,
