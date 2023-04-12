@@ -93,7 +93,6 @@ export const VoxelModel = () => {
               position: initialCameraPosition,
               near: 0.1,
               far: 5000,
-              lookat: { target },
             }}
           >
             <mesh ref={voxelObj}>
