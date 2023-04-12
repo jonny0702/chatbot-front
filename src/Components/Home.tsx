@@ -12,24 +12,25 @@ import { TypingLoading } from "./TypingLoading";
 import { ButtonStopChat } from "./ButonStopChat";
 import { AnimatePresence, motion } from "framer-motion";
 
-
 import "../styles/Home.sass";
-
-
+import { ButtonSetMarkDownFormat } from "./ButtonSetMarkDownFormat";
 
 /**
  *
  * @TASK
  * 1. making a loading chat for response gpt ✅
- * 2. MarkDown format
- * 3. Responsive Web page
+ * 2. MarkDown format✅
+ * 3. Responsive Web page✅
  * 4. making animation 3d camera
  */
 export const Home = () => {
   const [onChat, setOnChat] = useState(false);
   const [loadingState, setLoading] = useState(false);
+  const [onMarkdown, setOnMarkdown] = useState(false);
   const [chatText, setChatText] = useState("");
   const [messages, addMessage, setMessage] = useMessage([]);
+
+  const onMarkdownFormatPetition = onMarkdown ? chatText + ", markdown format" : chatText;
 
   const animatePage = {
     initial: { opacity: 0 },
@@ -54,14 +55,16 @@ export const Home = () => {
       addMessage({
         id: +new Date(),
         isResponse: false,
-        message: chatText,
+        message: onMarkdownFormatPetition,
       });
-      postChatAPI(chatText);
+      postChatAPI(onMarkdownFormatPetition);
     }
     setChatText("");
     setOnChat(true);
   };
-
+  const handleMarkDownFormat = () => {
+    setOnMarkdown(!onMarkdown);
+  };
   const handleOnHeader = () => {
     setOnChat(!onChat);
     setMessage([]);
@@ -94,7 +97,7 @@ export const Home = () => {
   return (
     <motion.div {...animatePage}>
       <MenuNav />
-      <div className="home__container m-2">
+      <div className="home__container m-auto">
         {!onChat ? (
           <section className="header_section">
             <Header />
@@ -124,7 +127,10 @@ export const Home = () => {
             {loadingState === true && <TypingLoading />}
           </section>
         )}
-        {onChat && <ButtonStopChat action={handleOnHeader} />}
+        <div className="button_modes_container">
+          {onChat && <ButtonStopChat action={handleOnHeader} />}
+          <ButtonSetMarkDownFormat action={handleMarkDownFormat} isSelected={onMarkdown}/>
+        </div>
         <footer className="footer__input--container">
           <InputChat>
             <form className="input_chat--container" onSubmit={handleSubmit}>

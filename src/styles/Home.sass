@@ -1,8 +1,7 @@
 .home__container
   display: flex
-  width: 95%
   flex-direction: column
-  align-items: space-between
+  width: 95%
   gap: 1rem
 .header_section
   display: flex
@@ -16,6 +15,17 @@
 .chat__container
   height: 77vh
   overflow: hidden auto
+.chat__container::-webkit-scrollbar
+  width: 0.5rem
+
+.chat__container::-webkit-scrollbar-thumb
+  background-color: rgb(190, 164, 214)
+  outline: none
+
+.chat__container
+  scroll-behavior: smooth
+  overflow-x: hidden
+
 .chat_items
   display: flex
   flex-direction: column
@@ -34,10 +44,35 @@
 .footer__input--container
   display: flex
   position: fixed
-  right: .5rem
   bottom: 1rem
   flex-direction: column
   justify-content: center
   align-content: center
   width: 95%
   height: 3rem
+.button_modes_container
+  position: fixed
+  display: flex
+  justify-content: center
+  bottom: 4.5rem
+  height: fit-content
+  gap: 1rem
+  width: 95%
+// MEDIA QUERYS
+// TABLET(700px)
+@media screen and (min-width: 1000px)
+  .home__container
+    display: flex
+    flex-direction: column
+    width: 80%
+    gap: 1rem
+  .header_section
+    display: flex
+    flex-direction: column
+    margin-top: 5%
+    gap: 1rem
+  .footer__input--container
+    width: 80%
+    height: 3rem
+  .button_modes_container
+    width: 80%

@@ -22,8 +22,8 @@
   align-items: center
   height: fit-content
   margin: .2rem
-  min-height: 1.5rem
-  min-width: 20%
+  min-height: 1rem
+  width: fit-content
   max-width: 100%
   background: #fcfcfc
   border-radius: 20px
@@ -31,6 +31,34 @@
   border-bottom-left-radius: 1px
   overflow: hidden
 .bubble-chat__mark
-  width: 98%
-  height: 100%
-  margin: auto
+  width: 100%
+  height: fit-content
+  text-align: justify
+  font-size: 1rem
+  font-weight: 400
+  padding: .3rem
+  p
+    margin: 0
+@media screen and (min-width: 1000px)
+  .bubble-chat__container
+    width: fit-content
+    height: fit-content
+    margin: .2rem
+    min-height: 1rem
+    min-width: 10%
+  .bubble-response__container
+    height: fit-content
+    margin: .2rem
+    min-height: 1rem
+    min-width: 10%
+    width: fit-content
+    max-width: 100%
+  .bubble-chat__mark
+    width: 100%
+    height: fit-content
+    text-align: justify
+    font-size: 1rem
+    font-weight: 300
+    padding: .2rem
+    p
+      margin: 0

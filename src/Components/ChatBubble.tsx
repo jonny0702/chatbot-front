@@ -22,7 +22,6 @@ export const ChatBubble: React.FC<ChatBubbleProps> = ({
   infoText,
   isResponse,
 }) => {
-  const [isPresent, safeToRemove] = usePresence();
 
   const animation = {
     layout: true,
@@ -41,21 +40,23 @@ export const ChatBubble: React.FC<ChatBubbleProps> = ({
         {...animation}
       >
         {isResponse ? (
-          <div className="bubble-chat__mark">
-            <Markdown
-              options={{
-                wrapper: "div",
-                disableParsingRawHTML: true,
-                overrides: {
-                  code: {
-                    component: CodeMarkdown,
+          <>
+            <div className={"bubble-chat__mark"}>
+              <Markdown
+                options={{
+                  wrapper: "div",
+                  disableParsingRawHTML: true,
+                  overrides: {
+                    code: {
+                      component: CodeMarkdown,
+                    },
                   },
-                },
-              }}
-            >
-              {infoText}
-            </Markdown>
-          </div>
+                }}
+              >
+                {infoText}
+              </Markdown>
+            </div>
+          </>
         ) : (
           <span className="bubble-chat__text">{infoText}</span>
         )}
