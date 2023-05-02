@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Home } from "./Components/Home";
+// @ts-ignore
 import { Helmet } from "react-helmet";
 import "./App.css";
 
