@@ -1,17 +1,24 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import { Home } from './Components/Home'
+import { useState } from "react";
+import { Home } from "./Components/Home";
+import { Helmet } from "react-helmet";
+import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
 
   return (
-    <div className="App">
-      <Home></Home>
-    </div>
-  )
+    <>
+      <Helmet>
+        <title>ChatBot</title>
+        <meta charSet="utf-8" />
+        <meta name="description" content="ChatBot application" />
+        <link rel="icon" type="image/png" href="../public/chatbot.png"/>
+      </Helmet>
+      <div className="App">
+        <Home></Home>
+      </div>
+    </>
+  );
 }
 
-export default App
+export default App;
