@@ -1,16 +1,16 @@
 import { useState, useCallback, useEffect, FormEventHandler } from "react";
+import { motion } from "framer-motion";
 import { useMessage } from "../Hooks/useMessageBubble";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { Header } from "./Header";
 import { VoxelModel } from "./VoxelModel";
 import { InputChat } from "./InputChat";
 import { ChatBubble } from "./ChatBubble";
 import { MenuNav } from "./MenuNav";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { TypingLoading } from "./TypingLoading";
 import { ButtonSetMarkDownFormat } from "./ButtonSetMarkDownFormat";
 import { ButtonStopChat } from "./ButonStopChat";
-import { motion } from "framer-motion";
 
 import "../styles/Home.sass";
 

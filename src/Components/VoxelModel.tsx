@@ -2,6 +2,7 @@ import * as THREE from "three";
 import { Suspense, useRef, useState, useEffect } from "react";
 import { Canvas, useThree } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
+import { Loader } from "./Loader";
 import { Model } from "./Scene";
 
 import "../styles/VoxelModel.sass";
@@ -20,7 +21,7 @@ export const VoxelModel = () => {
   const [aspectWidth, setAspectWidth] = useState(null);
   const [aspectHeight, setAspectHeight] = useState(null);
   const [scale, setScale] = useState<number>(0);
-  const [modelScale, setModelScale] = useState<any>([9, 9, 9]) ;
+  const [modelScale, setModelScale] = useState<any>([9, 9, 9]);
 
   const [target] = useState<any>(new THREE.Vector3(-0.5, 1, 0));
 
@@ -82,27 +83,31 @@ export const VoxelModel = () => {
   return (
     <>
       <div className="Model_container" ref={voxelRefContainer}>
-        <Suspense fallback={null}>
-          <Canvas
-            orthographic
-            camera={{
-              left: -scale,
-              right: scale,
-              top: scale,
-              bottom: -scale,
-              position: initialCameraPosition,
-              near: 0.1,
-              far: 5000,
-            }}
-          >
+        <Canvas
+          orthographic
+          camera={{
+            left: -scale,
+            right: scale,
+            top: scale,
+            bottom: -scale,
+            position: initialCameraPosition,
+            near: 0.1,
+            far: 5000,
+          }}
+        >
+          <Suspense fallback={<Loader />}>
             <mesh ref={voxelObj}>
               <Model position={[-0.5, -40, 0]} scale={modelScale} />
             </mesh>
             <ambientLight intensity={0.4} />
-            <pointLight position={[5, 10, 2]} color={"#e991ff"} intensity={0.8}/>
+            <pointLight
+              position={[5, 10, 2]}
+              color={"#e991ff"}
+              intensity={0.8}
+            />
             <Controller />
-          </Canvas>
-        </Suspense>
+          </Suspense>
+        </Canvas>
       </div>
     </>
   );
