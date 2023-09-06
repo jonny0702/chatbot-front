@@ -15,7 +15,7 @@ import { ButtonStopChat } from "./ButonStopChat";
 import "../styles/Home.sass";
 
 export const Home = () => {
-  const API_URL = "https://chatbotgpt-api.herokuapp.com/api/chatgpt";
+  const API_URL = "https://chat-bot-api-spring.fly.dev/api/chatgpt";
   const [onChat, setOnChat] = useState(false);
   const [loadingState, setLoading] = useState(false);
   const [onMarkdown, setOnMarkdown] = useState(false);
