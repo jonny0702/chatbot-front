@@ -1,8 +1,6 @@
-import { useState, useCallback, useEffect, FormEventHandler } from "react";
+import { useState, FormEventHandler } from "react";
 import { motion } from "framer-motion";
 import { useMessage } from "../Hooks/useMessageBubble";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { Header } from "./Header";
 import { VoxelModel } from "./VoxelModel";
 import { InputChat } from "./InputChat";
@@ -11,11 +9,12 @@ import { MenuNav } from "./MenuNav";
 import { TypingLoading } from "./TypingLoading";
 import { ButtonSetMarkDownFormat } from "./ButtonSetMarkDownFormat";
 import { ButtonStopChat } from "./ButonStopChat";
+import { PaperPlane } from "../assets/Atoms/PaperPlaneIcon";
 
 import "../styles/Home.sass";
 
 export const Home = () => {
-  const API_URL = "https://chatbotgpt-api.herokuapp.com/api/chatgpt";
+  const API_URL = "https://chat-bot-api-spring.fly.dev/api/chatgpt";
   const [onChat, setOnChat] = useState(false);
   const [loadingState, setLoading] = useState(false);
   const [onMarkdown, setOnMarkdown] = useState(false);
@@ -130,12 +129,9 @@ export const Home = () => {
           <InputChat>
             <form className="input_chat--container" onSubmit={handleSubmit}>
               <div className="input--container">
-                <div className="icon__container" onClick={handleSubmit}>
-                  <FontAwesomeIcon
-                    icon={faPaperPlane}
-                    size="1x"
-                    bounce
-                    style={{ color: "#3a3a3a" }}
+                <div className="icon__container bounce" onClick={handleSubmit}>
+                  <PaperPlane
+                    fill="#666666"
                   />
                 </div>
                 <input
